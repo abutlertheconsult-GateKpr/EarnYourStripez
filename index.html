@@ -124,6 +124,108 @@ select option{background:var(--surface2)}
 .cat-pill.active{background:var(--crimson);border-color:var(--crimson2);color:var(--text)}
 /* FULL */
 .full{width:100%}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — comprehensive device support
+   ══════════════════════════════════════════ */
+
+/* Fix iOS Safari 100vh bug — browser toolbar eats into 100vh */
+#app{height:100svh}
+
+/* Layout helpers */
+.page-header-inner{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.header-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+
+/* CRITICAL: prevent iOS Safari auto-zoom on input focus.
+   Any input with font-size < 16px triggers full-page zoom on iOS.
+   Override to 16px on all mobile — base styles still apply for look/feel
+   but 16px stops the zoom. */
+@media(max-width:768px){
+  input,select,textarea{font-size:16px}
+}
+
+/* ── Tablet / large phone (≤600px) ──
+   Stat-edit grid: drop to 1 column so each metric card
+   is full-width and fields/selectors are readable */
+@media(max-width:600px){
+  .stat-edit-grid{grid-template-columns:1fr}
+}
+
+/* ── Small phone (≤400px) ── */
+@media(max-width:400px){
+  .page-title{font-size:22px;letter-spacing:1px}
+  .page-sub{font-size:10px}
+  .page-header{padding:10px 12px}
+  .btn-sm{padding:5px 8px;font-size:11px}
+  .modal{padding:14px 12px 32px}
+  .modal-title{font-size:22px}
+  .card{margin:8px 10px;padding:10px}
+  .cal-grid{padding:4px 8px;gap:2px}
+  .cal-day{font-size:11px}
+  .stat-grid{padding:6px 10px;gap:6px}
+  .stat-value{font-size:16px}
+  .section-divider{padding:10px 10px 4px}
+  .cat-pills{padding:6px 10px}
+  .routine-card,.link-item{margin:6px 10px}
+  .settings-section{margin:0 10px 14px}
+  .settings-label{font-size:12px}
+  .settings-sub{font-size:10px}
+  /* Prevent settings rows wrapping buttons off-screen */
+  .settings-row{flex-wrap:wrap;gap:6px}
+  .settings-row>div:first-child{flex:1;min-width:0}
+  #today-panel{padding:8px 10px 80px}
+  .mrow label{min-width:44px;font-size:10px}
+  .wsb{padding:8px 10px}
+
+  /* Drop the Time column from set rows — saves ~70px of width.
+     Time is rarely used for weight training; visible in day detail view. */
+  .set-row > *:nth-child(4),.set-hdr > *:nth-child(4){display:none}
+  .set-row,.set-hdr{grid-template-columns:20px 1fr 1fr 28px 24px;gap:3px}
+
+  /* Health Insights: profile trio wraps into 2-per-row */
+  .profile-pair{flex-wrap:wrap;gap:6px}
+  .profile-pair>div{flex:1 1 calc(50% - 3px);min-width:70px}
+
+  /* Insight values: long text like "120/80 mmHg" needs to wrap */
+  .insight-value{font-size:14px;word-break:break-word;line-height:1.3}
+  .insight-badge{margin-left:0;margin-top:4px}
+  .insight-card{padding:9px 10px}
+}
+
+/* ── Tiny phone (≤340px — iPhone SE 1st gen, budget Android) ── */
+@media(max-width:340px){
+  .page-title{font-size:18px}
+  .modal{padding:12px 10px 28px}
+  .stat-grid{grid-template-columns:1fr}
+  .nav-btn{font-size:8px;padding:6px 2px}
+  .nav-btn svg{width:18px;height:18px}
+  .btn-sm{padding:4px 6px;font-size:10px}
+}
+
+/* HEALTH INSIGHTS */
+.health-icon-btn{background:var(--crimson);border:none;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;vertical-align:middle;margin-left:6px;transition:background .15s;position:relative;top:-1px}
+.health-icon-btn:hover{background:var(--crimson2)}
+.health-icon-btn.ok{background:var(--green2)}.health-icon-btn.ok:hover{background:var(--green3)}
+.health-icon-btn.warn{background:rgba(184,150,46,.7)}.health-icon-btn.warn:hover{background:var(--gold2)}
+.health-icon-btn svg{width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.insight-card{border-radius:8px;padding:10px 12px;margin-bottom:8px;border:1px solid transparent}
+.insight-good{background:rgba(45,90,39,.2);border-color:var(--green2)}
+.insight-warn{background:rgba(184,150,46,.1);border-color:rgba(184,150,46,.3)}
+.insight-bad{background:rgba(139,26,26,.2);border-color:var(--crimson)}
+.insight-label{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:3px}
+.insight-value{font-family:var(--font-mono);font-size:18px;font-weight:500;color:var(--text)}
+.insight-desc{font-size:11px;color:var(--text2);margin-top:4px;line-height:1.55}
+.insight-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-left:6px}
+.ibadge-good{background:rgba(90,170,78,.25);color:var(--green3);border:1px solid var(--green2)}
+.ibadge-warn{background:rgba(184,150,46,.2);color:var(--gold2);border:1px solid rgba(184,150,46,.3)}
+.ibadge-bad{background:rgba(139,26,176,.3);color:var(--crimson3);border:1px solid var(--crimson)}
+.profile-pair{display:flex;gap:10px;margin-bottom:14px}
+.profile-pair>div{flex:1;background:var(--surface3);border-radius:8px;padding:8px 10px;text-align:center}
+.profile-pair label{display:block;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.profile-pair .pval{font-family:var(--font-mono);font-size:17px;color:var(--text)}
+.insight-score{text-align:center;padding:10px;background:var(--surface3);border-radius:8px;margin-bottom:14px}
+.insight-score-num{font-family:var(--font-display);font-size:36px;letter-spacing:2px;line-height:1}
+.insight-score-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-top:2px}
 </style>
 </head>
 <body>
@@ -133,9 +235,9 @@ select option{background:var(--surface2)}
 <!-- STATS PAGE -->
 <div class="page active" id="page-stats">
   <div class="page-header">
-    <div style="display:flex;align-items:center;justify-content:space-between">
+    <div class="page-header-inner">
       <div><div class="page-title">STATS</div><div class="page-sub">Body metrics &amp; goals</div></div>
-      <div style="display:flex;gap:6px">
+      <div class="header-actions">
         <button class="btn btn-ghost btn-sm" onclick="exportBackup()">⬇ Backup</button>
         <button class="btn btn-gold btn-sm" onclick="openEditStats()">Edit</button>
       </div>
@@ -161,11 +263,11 @@ select option{background:var(--surface2)}
 <!-- WORKOUT PAGE -->
 <div class="page" id="page-workout">
   <div class="page-header">
-    <div style="display:flex;align-items:center;justify-content:space-between">
+    <div class="page-header-inner">
       <div><div class="page-title">WORKOUT</div><div class="page-sub" id="workout-date-sub"></div></div>
-      <div style="display:flex;gap:6px">
+      <div class="header-actions">
         <button class="btn btn-ghost btn-sm" onclick="openDatePicker()">📅 Date</button>
-        <button class="btn btn-ghost btn-sm" onclick="openAddExercise()">+ Exercise</button>
+        <button class="btn btn-ghost btn-sm" onclick="openAddExercise()">+ Add</button>
         <button class="btn btn-primary btn-sm" onclick="finishWorkout()">Done</button>
       </div>
     </div>
@@ -176,7 +278,7 @@ select option{background:var(--surface2)}
 <!-- ROUTINES PAGE -->
 <div class="page" id="page-routines">
   <div class="page-header">
-    <div style="display:flex;align-items:center;justify-content:space-between">
+    <div class="page-header-inner">
       <div><div class="page-title">ROUTINES</div><div class="page-sub">Programs &amp; plans</div></div>
       <button class="btn btn-gold btn-sm" onclick="openAddRoutine()">+ Add</button>
     </div>
@@ -187,7 +289,7 @@ select option{background:var(--surface2)}
 <!-- LINKS PAGE -->
 <div class="page" id="page-links">
   <div class="page-header">
-    <div style="display:flex;align-items:center;justify-content:space-between">
+    <div class="page-header-inner">
       <div><div class="page-title">RESOURCES</div><div class="page-sub">Saved links</div></div>
       <button class="btn btn-gold btn-sm" onclick="openAddLink()">+ Link</button>
     </div>
@@ -371,13 +473,20 @@ select option{background:var(--surface2)}
 </div>
 </div>
 
+<!-- Health Insights -->
+<div class="modal-backdrop" id="modal-health-insights">
+<div class="modal">
+  <button class="modal-close" onclick="closeModal('modal-health-insights')">×</button>
+  <div class="modal-title">HEALTH INSIGHTS</div>
+  <div id="health-insights-body"></div>
+</div>
+</div>
+
 <div id="toast"></div>
 
 <script>
 // ═══════════ DEFAULT DATA ═══════════
 const DEFAULT_STAT_FIELDS=[
-  {key:'age',label:'Age',unit:'yrs',cycle:'yearly',type:'info'},
-  {key:'gender',label:'Gender',unit:'',cycle:'yearly',type:'info'},
   {key:'weight',label:'Weight',unit:'lbs',cycle:'weekly',type:'measurement'},
   {key:'height',label:'Height',unit:'in',cycle:'yearly',type:'measurement'},
   {key:'body_fat',label:'Body Fat %',unit:'%',cycle:'monthly',type:'measurement'},
@@ -393,7 +502,7 @@ const DEFAULT_STAT_FIELDS=[
   {key:'shoulder',label:'Shoulder',unit:'in',cycle:'monthly',type:'measurement'},
   {key:'neck',label:'Neck',unit:'in',cycle:'monthly',type:'measurement'},
   {key:'lower_back',label:'Lower Back',unit:'in',cycle:'monthly',type:'measurement'},
-  {key:'vo2max',label:'VO2 Max',unit:'ml/kg',cycle:'quarterly',type:'performance'},
+  {key:'vo2max',label:'VO2 Max',unit:'ml/kg/min',cycle:'quarterly',type:'performance'},
   {key:'resting_hr',label:'Resting HR',unit:'bpm',cycle:'weekly',type:'performance'},
   {key:'bp_sys',label:'BP Systolic',unit:'mmHg',cycle:'weekly',type:'health'},
   {key:'bp_dia',label:'BP Diastolic',unit:'mmHg',cycle:'weekly',type:'health'},
@@ -434,13 +543,14 @@ const FAMOUS_ROUTINES=[
 
 // ═══════════ STATE ═══════════
 let S={
+  profile:{dob:'',gender:''},
   statHistory:[],statFields:[...DEFAULT_STAT_FIELDS],goals:{},
   workoutLog:{},customRoutines:[],links:[],firebaseConfig:{},
   exercises:{...JSON.parse(JSON.stringify(DEFAULT_EXERCISES))},
   emptyStateImage:null,
   settings:{units:'mixed',theme:'dark-military'}
 };
-function loadS(){try{const d=localStorage.getItem('ironlog_v2');if(d){const p=JSON.parse(d);S={...S,...p};if(!p.exercises)S.exercises={...JSON.parse(JSON.stringify(DEFAULT_EXERCISES))};}}catch(e){}}
+function loadS(){try{const d=localStorage.getItem('ironlog_v2');if(d){const p=JSON.parse(d);S={...S,...p};if(!S.profile)S.profile={dob:'',gender:''};if(!p.exercises)S.exercises={...JSON.parse(JSON.stringify(DEFAULT_EXERCISES))};}}catch(e){}}
 function saveS(){try{localStorage.setItem('ironlog_v2',JSON.stringify(S));}catch(e){}}
 loadS();
 
@@ -467,11 +577,170 @@ function showPage(id,btn){
 }
 function fmtDate(ds){return new Date(ds+'T12:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})}
 
+// ═══════════ HEALTH INSIGHTS ENGINE ═══════════
+function getProfileAge(){
+  const p=S.profile||{};if(!p.dob)return null;
+  const dob=new Date(p.dob);const today=new Date();
+  let age=today.getFullYear()-dob.getFullYear();
+  const m=today.getMonth()-dob.getMonth();
+  if(m<0||(m===0&&today.getDate()<dob.getDate()))age--;
+  return age>0?age:null;
+}
+function calcHealthInsights(){
+  const latest=S.statHistory.length?S.statHistory[S.statHistory.length-1]:null;
+  const v=latest?latest.values:{};
+  const p=S.profile||{};
+  const age=getProfileAge();
+  const gender=(p.gender||'').toLowerCase();
+  const isMale=gender==='male';const isFemale=gender==='female';
+  const insights=[];
+  // BMI
+  const wt=parseFloat(v.weight),ht=parseFloat(v.height);
+  if(wt&&ht){
+    const bmi=((wt/(ht*ht))*703).toFixed(1);
+    let cat,cls,desc;
+    if(bmi<18.5){cat='Underweight';cls='bad';desc='BMI is below the healthy range. Consider speaking with a healthcare provider.';}
+    else if(bmi<25){cat='Healthy';cls='good';desc='BMI is in the healthy range. Great work!';}
+    else if(bmi<30){cat='Overweight';cls='warn';desc='Slightly above healthy range. Strength training and cardio can help.';}
+    else{cat='Obese';cls='bad';desc='BMI indicates obesity. Consult a healthcare provider for guidance.';}
+    insights.push({label:'BMI',value:bmi,unit:'',cat,cls,desc,note:`Healthy range: 18.5 – 24.9`});
+  }
+  // Body Fat %
+  const bf=parseFloat(v.body_fat);
+  if(bf!=null&&!isNaN(bf)&&age){
+    let lo,hi,cat,cls,desc;
+    if(isMale){
+      if(age<30){lo=8;hi=19;}else if(age<40){lo=11;hi=21;}else if(age<50){lo=13;hi=23;}else{lo=15;hi=25;}
+    }else{
+      if(age<30){lo=21;hi=32;}else if(age<40){lo=23;hi=33;}else if(age<50){lo=24;hi=34;}else{lo=25;hi=35;}
+    }
+    const athlHi=isMale?lo-2:lo-3;
+    if(bf<=athlHi){cat='Athletic';cls='good';desc=`Elite level body fat for a ${age}yr ${gender||'person'}. Outstanding!`;}
+    else if(bf<=hi){cat='Healthy';cls='good';desc=`Body fat is within the healthy range for your age & gender.`;}
+    else if(bf<=hi+6){cat='Above Average';cls='warn';desc=`Slightly above the healthy range (${lo}–${hi}%) for your age & gender.`;}
+    else{cat='High';cls='bad';desc=`Body fat is well above the healthy range. Diet and training adjustments recommended.`;}
+    insights.push({label:'Body Fat %',value:bf+'%',unit:'',cat,cls,desc,note:`Healthy for ${age}yr ${gender||'person'}: ${lo}–${hi}%`});
+  }
+  // Waist-to-Height ratio
+  const waist=parseFloat(v.waist),hips=parseFloat(v.hips);
+  if(waist&&ht){
+    const ratio=(waist/ht).toFixed(2);let cat,cls,desc;
+    if(ratio<0.40){cat='Excellent';cls='good';desc='Outstanding waist-to-height ratio. Minimal cardiometabolic risk.';}
+    else if(ratio<0.50){cat='Healthy';cls='good';desc='Healthy ratio — you\'re below the 0.5 risk threshold. Keep it up!';}
+    else if(ratio<0.60){cat='Increased Risk';cls='warn';desc='Slightly above the healthy 0.5 threshold. Worth monitoring.';}
+    else{cat='High Risk';cls='bad';desc='Elevated cardiometabolic risk. Consider waist reduction strategies.';}
+    insights.push({label:'Waist-to-Height',value:ratio,unit:'ratio',cat,cls,desc,note:'Target: < 0.50'});
+  }
+  // Waist-to-Hip ratio
+  if(waist&&hips){
+    const ratio=(waist/hips).toFixed(2);let cat,cls,desc;
+    const good=isFemale?0.80:0.85,high=isFemale?0.85:0.90;
+    if(ratio<good){cat='Excellent';cls='good';desc='Excellent fat distribution. Very low cardiovascular risk.';}
+    else if(ratio<high){cat='Good';cls='good';desc='Good waist-to-hip ratio for your gender.';}
+    else if(ratio<high+0.10){cat='Moderate Risk';cls='warn';desc='Moderate central fat accumulation. Consider targeted cardio and diet.';}
+    else{cat='High Risk';cls='bad';desc='High cardiovascular risk from fat distribution pattern.';}
+    insights.push({label:'Waist-to-Hip',value:ratio,unit:'ratio',cat,cls,desc,note:`Target for ${gender||'this gender'}: < ${good}`});
+  }
+  // VO2 Max
+  const vo2=parseFloat(v.vo2max);
+  if(vo2&&age){
+    let ex,good,avg;
+    if(isMale){if(age<30){ex=52;good=43;avg=34;}else if(age<40){ex=49;good=40;avg=31;}else if(age<50){ex=45;good=36;avg=27;}else if(age<60){ex=41;good=32;avg=23;}else{ex=37;good=28;avg=19;}}
+    else{if(age<30){ex=44;good=35;avg=26;}else if(age<40){ex=41;good=32;avg=23;}else if(age<50){ex=37;good=28;avg=19;}else if(age<60){ex=33;good=24;avg=16;}else{ex=29;good=20;avg=13;}}
+    let cat,cls,desc;
+    if(vo2>=ex){cat='Excellent';cls='good';desc=`Outstanding cardiovascular fitness for your age! You\'re beating most people your age.`;}
+    else if(vo2>=good){cat='Good';cls='good';desc=`Above average VO2 Max for a ${age}yr ${gender||'person'}. Strong aerobic fitness.`;}
+    else if(vo2>=avg){cat='Average';cls='warn';desc=`Average for your age. Regular cardio training can push you into the "good" range.`;}
+    else{cat='Below Average';cls='bad';desc=`Below average aerobic capacity for ${age} year olds. Focus on steady-state and interval cardio.`;}
+    insights.push({label:'VO2 Max',value:vo2+' ml/kg/min',unit:'',cat,cls,desc,note:`Excellent threshold for ${age}yr ${gender||'person'}: ≥${ex} ml/kg/min`});
+  }
+  // Resting HR
+  const rhr=parseFloat(v.resting_hr);
+  if(rhr){
+    let cat,cls,desc;
+    if(rhr<50){cat='Athlete';cls='good';desc='Elite resting HR — typical of highly trained endurance athletes.';}
+    else if(rhr<60){cat='Excellent';cls='good';desc='Excellent resting heart rate. Strong cardiovascular health.';}
+    else if(rhr<70){cat='Good';cls='good';desc='Good resting heart rate, well within the healthy normal range.';}
+    else if(rhr<80){cat='Average';cls='warn';desc='Average range. Regular cardio training can lower resting HR over time.';}
+    else{cat='Elevated';cls='bad';desc='Elevated resting HR. Consider cardio training and speak with a doctor if persistent.';}
+    insights.push({label:'Resting HR',value:rhr+' bpm',unit:'',cat,cls,desc,note:'Healthy: 50–70 bpm'});
+  }
+  // Blood Pressure
+  const bpS=parseFloat(v.bp_sys),bpD=parseFloat(v.bp_dia);
+  if(bpS&&bpD){
+    let cat,cls,desc;
+    if(bpS<120&&bpD<80){cat='Normal';cls='good';desc='Blood pressure is ideal. Excellent cardiovascular health.';}
+    else if(bpS<130&&bpD<80){cat='Elevated';cls='warn';desc='Slightly elevated. Lifestyle changes (diet, exercise, stress) can help.';}
+    else if(bpS<140||bpD<90){cat='High Stage 1';cls='warn';desc='Stage 1 hypertension. Discuss management with your doctor.';}
+    else{cat='High Stage 2';cls='bad';desc='Stage 2 hypertension. Consult a healthcare provider promptly.';}
+    insights.push({label:'Blood Pressure',value:bpS+'/'+bpD+' mmHg',unit:'',cat,cls,desc,note:'Ideal: < 120/80 mmHg'});
+  }
+  // Sleep
+  const slp=parseFloat(v.sleep_avg);
+  if(slp){
+    let cat,cls,desc;
+    if(slp>=7&&slp<=9){cat='Optimal';cls='good';desc='Getting the recommended 7–9 hours. Crucial for muscle recovery and performance.';}
+    else if(slp>=6){cat='Fair';cls='warn';desc='Slightly under recommended sleep. Even 30 extra minutes improves recovery noticeably.';}
+    else if(slp>9){cat='Excessive';cls='warn';desc='Consistently over 9 hours may indicate fatigue or other issues worth discussing with a doctor.';}
+    else{cat='Insufficient';cls='bad';desc='Significantly under-sleeping. This impairs muscle growth, cognition, and hormone balance.';}
+    insights.push({label:'Avg Sleep',value:slp+' hrs',unit:'',cat,cls,desc,note:'Recommended: 7–9 hrs'});
+  }
+  const goods=insights.filter(i=>i.cls==='good').length;
+  const total=insights.length;
+  let overallCls='neutral';
+  if(total>0){if(goods/total>=0.7)overallCls='good';else if(goods/total>=0.4)overallCls='warn';else overallCls='bad';}
+  return{insights,overallCls,goods,total};
+}
+function openHealthInsights(){
+  const{insights,overallCls,goods,total}=calcHealthInsights();
+  const age=getProfileAge();const p=S.profile||{};
+  const gLabel=p.gender?(p.gender.charAt(0).toUpperCase()+p.gender.slice(1)):'—';
+  const scoreColor=overallCls==='good'?'var(--green3)':overallCls==='warn'?'var(--gold2)':'var(--crimson3)';
+  let html=`<div class="profile-pair">
+    <div><label>Age</label><div class="pval">${age?age+' yrs':'—'}</div></div>
+    <div><label>Gender</label><div class="pval">${gLabel}</div></div>
+    <div><label>Score</label><div class="pval" style="color:${scoreColor}">${total?goods+' / '+total:'—'}</div></div>
+  </div>`;
+  if(!insights.length){
+    html+=`<div style="text-align:center;padding:24px 0;color:var(--text3);font-size:13px">Add body measurements and profile info<br>to see personalized health insights.</div>`;
+  }else{
+    if(goods===total){html+=`<div style="text-align:center;padding:10px;margin-bottom:12px;background:rgba(45,90,39,.2);border:1px solid var(--green2);border-radius:8px;font-size:13px;color:var(--green3);font-weight:500">🏆 All metrics above average — Outstanding work!</div>`;}
+    insights.forEach(ins=>{
+      html+=`<div class="insight-card insight-${ins.cls}">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px">
+          <div class="insight-label">${ins.label}</div>
+          <span class="insight-badge ibadge-${ins.cls}">${ins.cat}</span>
+        </div>
+        <div class="insight-value">${ins.value}</div>
+        <div class="insight-desc">${ins.desc}</div>
+        ${ins.note?`<div style="font-size:10px;color:var(--text3);margin-top:5px;font-style:italic">${ins.note}</div>`:''}
+      </div>`;
+    });
+    const bads=[...insights.filter(i=>i.cls==='bad'),...insights.filter(i=>i.cls==='warn')];
+    if(bads.length){
+      html+=`<div style="font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin:10px 0 6px">Priority Focus Areas</div>`;
+      bads.slice(0,3).forEach(i=>html+=`<div style="font-size:12px;color:var(--text2);padding:5px 0;border-bottom:1px solid var(--border)">→ ${i.label} — ${i.cat}</div>`);
+    }
+  }
+  if(!p.dob||!p.gender){html+=`<div style="margin-top:12px;font-size:11px;color:var(--gold);background:rgba(184,150,46,.08);border:1px solid rgba(184,150,46,.2);border-radius:6px;padding:8px 10px">Tip: Add your Date of Birth and Gender in Edit Stats for age-adjusted benchmarks.</div>`;}
+  html+=`<div style="height:8px"></div>`;
+  document.getElementById('health-insights-body').innerHTML=html;
+  openModal('modal-health-insights');
+}
+
 // ═══════════ STATS ═══════════
 function renderStats(){
   const latest=S.statHistory.length?S.statHistory[S.statHistory.length-1]:null;
   const prev=S.statHistory.length>1?S.statHistory[S.statHistory.length-2]:null;
-  let html='<div style="padding:10px 16px 0;display:flex;gap:8px"><button class="btn btn-ghost btn-sm" style="flex:1" onclick="openGoals()">🎯 Edit Goals</button></div>';
+  const{overallCls,goods,total}=calcHealthInsights();
+  const healthBtnCls=total===0?'':overallCls==='good'?' ok':overallCls==='warn'?' warn':'';
+  const healthTitle=total?`${goods}/${total} metrics above average — tap for details`:'Tap for health insights';
+  let html=`<div style="padding:10px 16px 0;display:flex;gap:8px;align-items:center">
+    <button class="btn btn-ghost btn-sm" style="flex:1" onclick="openGoals()">🎯 Edit Goals</button>
+    <button class="health-icon-btn${healthBtnCls}" onclick="openHealthInsights()" title="${healthTitle}">
+      <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    </button>
+  </div>`;
   if(!latest){
     html+=`<div class="empty-state">
       <svg viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="48" rx="6"/><path d="M20 32h8m8 0h8M32 20v8m0 8v8"/></svg>
@@ -479,14 +748,16 @@ function renderStats(){
       <button class="btn btn-primary" onclick="openEditStats()">Record First Entry</button></div>`;
     document.getElementById('stats-display').innerHTML=html;return;
   }
-  const groups={info:'Identity',measurement:'Body Measurements',performance:'Performance',health:'Health Markers',custom:'Custom Metrics'};
+  const groups={measurement:'Body Measurements',performance:'Performance',health:'Health Markers',custom:'Custom Metrics'};
   const grouped={};
   S.statFields.forEach(f=>{const g=f.type||'custom';if(!grouped[g])grouped[g]=[];grouped[g].push(f);});
   Object.entries(groups).forEach(([gk,gl])=>{
     if(!grouped[gk]||!grouped[gk].length)return;
     const fields=grouped[gk].filter(f=>latest.values[f.key]!==undefined&&latest.values[f.key]!=='');
     if(!fields.length)return;
-    html+=`<div class="section-divider"><span>${gl}</span></div><div class="stat-grid">`;
+    const isMeasurement=(gk==='measurement');
+    const dividerExtra=isMeasurement?`<button class="health-icon-btn${healthBtnCls}" onclick="openHealthInsights()" title="${healthTitle}"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></button>`:'';
+    html+=`<div class="section-divider"><span>${gl}</span>${dividerExtra}</div><div class="stat-grid">`;
     fields.forEach(f=>{
       const val=latest.values[f.key];const pv=prev?prev.values[f.key]:null;
       let dh='';
@@ -506,12 +777,29 @@ function renderStats(){
 function openEditStats(){
   const latest=S.statHistory.length?S.statHistory[S.statHistory.length-1]:null;
   document.getElementById('stat-entry-date').value=new Date().toISOString().split('T')[0];
-  const groups={info:'Identity',measurement:'Body Measurements',performance:'Performance',health:'Health Markers',custom:'Custom Metrics'};
+  const p=S.profile||{};
+  const groups={measurement:'Body Measurements',performance:'Performance',health:'Health Markers',custom:'Custom Metrics'};
   const grouped={};S.statFields.forEach(f=>{const g=f.type||'custom';if(!grouped[g])grouped[g]=[];grouped[g].push(f);});
-  let html='';
+  // Profile section at top
+  let html=`<div style="background:var(--surface3);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:4px">
+    <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:10px;font-weight:500">Profile</div>
+    <div style="display:flex;gap:10px;margin-bottom:10px">
+      <div style="flex:1"><label style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px">Date of Birth</label>
+        <input type="date" id="profile-dob" value="${p.dob||''}" style="width:100%"></div>
+      <div style="flex:1"><label style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px">Gender</label>
+        <select id="profile-gender" style="width:100%">
+          <option value="" ${!p.gender?'selected':''}>— Select —</option>
+          <option value="male" ${p.gender==='male'?'selected':''}>Male</option>
+          <option value="female" ${p.gender==='female'?'selected':''}>Female</option>
+          <option value="other" ${p.gender==='other'?'selected':''}>Other</option>
+        </select></div>
+    </div>
+    <div style="font-size:10px;color:var(--text3);line-height:1.5">Used to calculate age-adjusted benchmarks. Never shared — stored locally only.</div>
+  </div>`;
   Object.entries(groups).forEach(([gk,gl])=>{
     if(!grouped[gk]||!grouped[gk].length)return;
-    html+=`<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin:12px 0 8px;font-weight:500">${gl}</div><div class="stat-edit-grid">`;
+    const isMeasurement=(gk==='measurement');
+    html+=`<div style="display:flex;align-items:center;gap:6px;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin:12px 0 8px;font-weight:500">${gl}${isMeasurement?`<button type="button" class="health-icon-btn" onclick="openHealthInsights()" title="View Health Insights"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></button>`:''}</div><div class="stat-edit-grid">`;
     grouped[gk].forEach(f=>{
       const val=latest?(latest.values[f.key]||''):'';const cyc=latest?(latest.cycles&&latest.cycles[f.key]?latest.cycles[f.key]:f.cycle):f.cycle;
       html+=`<div class="stat-edit-item"><label>${f.label}${f.unit?' ('+f.unit+')':''}</label><input data-stat-key="${f.key}" value="${val}" placeholder="—"><select class="cycle-sel" data-cycle-key="${f.key}">${CYCLES.map(c=>`<option value="${c}"${c===cyc?' selected':''}>${c}</option>`).join('')}</select>${f.type==='custom'?`<button type="button" onclick="removeStat('${f.key}')" style="margin-top:4px;font-size:10px;color:var(--crimson3);background:none;border:none;cursor:pointer;text-decoration:underline">remove</button>`:''}</div>`;
@@ -532,6 +820,9 @@ function addCustomStat(){
 function removeStat(k){S.statFields=S.statFields.filter(f=>f.key!==k);S.statHistory.forEach(e=>{delete e.values[k];});saveS();openEditStats();}
 function saveStats(){
   const date=document.getElementById('stat-entry-date').value||new Date().toISOString().split('T')[0];
+  // Save profile (DOB + gender)
+  const dobEl=document.getElementById('profile-dob');const genEl=document.getElementById('profile-gender');
+  if(dobEl)S.profile.dob=dobEl.value;if(genEl)S.profile.gender=genEl.value;
   const values={},cycles={};
   document.querySelectorAll('[data-stat-key]').forEach(el=>{if(el.value.trim())values[el.dataset.statKey]=el.value.trim();});
   document.querySelectorAll('[data-cycle-key]').forEach(el=>{cycles[el.dataset.cycleKey]=el.value;});
